@@ -31,14 +31,15 @@
                             {% endfor %}
                         </select>                    
                     </form>            
-                </th>
+                </th>                
                 <th class="text-center align-top" scope="col">
-                    &nbsp;
-                </th>				
+                    Nombre de formations<br />
+                    <a href="{{ path('playlists.sortByFormationCount', {ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">↑</a>
+                    <a href="{{ path('playlists.sortByFormationCount', {ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">↓</a>
+                </th>                			
             </tr>
         </thead>
         <tbody>
-            <!-- boucle sur les playlists -->
             {% if playlists|length > 0 %}
                 {% for k in 0..playlists|length-1 %}
                     <tr class="align-middle">
@@ -54,7 +55,10 @@
                                     &nbsp;{{ categories[c] }}                                  
                                 {% endfor %}
                             {% endif %}
-                        </td>            					
+                        </td>  
+                        <td class="text-center">
+                            {{ playlists[k].getFormationCount() }}
+                        </td>        					
                         <td class="text-center">
                             <a href="{{ path('playlists.showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
                         </td> 					

@@ -20,6 +20,7 @@ class PlaylistsController extends AbstractController
 
     private const ORDER_ASC = 'ASC';
     private const TEMPLATE_PLAYLISTS = "pages/playlists.html.twig";
+    private const TEMPLATE_PLAYLIST = "pages/playlist.html.twig";
 
     /**
      *
@@ -68,14 +69,28 @@ class PlaylistsController extends AbstractController
     {
         if ($champ === "name") {
             $playlists = $this->playlistRepository->findAllOrderByName($ordre);
+        } elseif ($champ === "formations") { // Ajout du tri par formations
+            $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
         } else {
             throw $this->createNotFoundException("Le critère de tri '$champ' est invalide.");
         }
 
         $categories = $this->categorieRepository->findAll();
-        return $this->render("pages/playlists.html.twig", [
+        return $this->render(self::TEMPLATE_PLAYLISTS, [
                     'playlists' => $playlists,
                     'categories' => $categories
+        ]);
+    }
+    
+    #[Route('/playlists/tri/formations/{ordre}', name: 'playlists.sortByFormationCount')]
+    public function sortByFormationCount(string $ordre): Response
+    {
+        $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
+        $categories = $this->categorieRepository->findAll();
+
+        return $this->render(self::TEMPLATE_PLAYLISTS, [
+            'playlists' => $playlists,
+            'categories' => $categories
         ]);
     }
 
@@ -99,10 +114,11 @@ class PlaylistsController extends AbstractController
         $playlist = $this->playlistRepository->find($id);
         $playlistCategories = $this->categorieRepository->findAllForOnePlaylist($id);
         $playlistFormations = $this->formationRepository->findAllForOnePlaylist($id);
-        return $this->render("pages/playlist.html.twig", [
+        return $this->render(self::TEMPLATE_PLAYLIST, [
                     'playlist' => $playlist,
                     'playlistcategories' => $playlistCategories,
-                    'playlistformations' => $playlistFormations
+                    'playlistformations' => $playlistFormations,
+                    'formationCount' => $playlist->getFormationCount()
         ]);
     }
 }

@@ -1,4 +1,3 @@
-
 <?php
 
 namespace App\Repository;
@@ -12,6 +11,7 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class PlaylistRepository extends ServiceEntityRepository
 {
+    
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Playlist::class);
@@ -78,5 +78,21 @@ class PlaylistRepository extends ServiceEntityRepository
                             ->getQuery()
                             ->getResult();
         }
+    }
+    
+    /**
+    * Retourne toutes les playlists avec le nombre de formations associées,
+    * triées selon le critère donné.
+    * @param string $ordre Ordre de tri (ASC ou DESC)
+    * @return Playlist[]
+    */
+    public function findAllOrderByFormationCount(string $ordre): array
+    {
+        return $this->createQueryBuilder('p')
+                ->leftJoin('p.formations', 'f')
+                ->groupBy('p.id')
+                ->orderBy('COUNT(f.id)', $ordre) // Trie selon le nombre de formations
+                ->getQuery()
+                ->getResult();
     }
 }
