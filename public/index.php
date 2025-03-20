@@ -1,7 +1,7 @@
 <?php
 
 use App\Kernel;
-
+// Ignorer SonarLint : Symfony autoload
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {
