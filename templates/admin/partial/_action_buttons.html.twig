@@ -1,0 +1,15 @@
+<div class="d-flex gap-2">
+    {% if edit_route is defined %}
+        <a href="{{ path(edit_route, { id: entity.id }) }}"class="btn btn-info btn-sm" title="Modifier {{ entity.title is defined ? entity.title : 'cet élément' }}">Modifier</a>
+    {% endif %}
+
+    {% if delete_route is defined %}
+        <form method="post"
+              action="{{ path(delete_route, { id: entity.id }) }}"
+              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer {{ entity.title is defined ? entity.title : 'cet élément' }} ?');"
+              class="d-inline">
+            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
+            <button class="btn btn-danger btn-sm" title="Supprimer {{ entity.title is defined ? entity.title : 'cet élément' }}">Supprimer</button>
+        </form>
+    {% endif %}
+</div>

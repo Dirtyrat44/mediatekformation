@@ -6,9 +6,12 @@ use App\Repository\FormationRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
+#[UniqueEntity('title')]
 class Formation
 {
 
@@ -22,18 +25,31 @@ class Formation
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotNull(message: "La date de publication est requise.")]
+    #[Assert\LessThanOrEqual('today', message: "La date ne peut pas être postérieure à aujourd’hui.")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publishedAt = null;
 
+    #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $title = null;
 
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: "La description ne doit pas dépasser {{ limit }} caractères."
+    )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    #[Assert\NotBlank(message : 'Ce champ est requis')]
+    #[Assert\Regex(
+        pattern: '/^[a-zA-Z0-9_-]{11}$/',
+        message: 'L’ID de la vidéo doit être un identifiant YouTube valide (11 caractères).'
+    )]
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $videoId = null;
 
+    #[Assert\NotNull(message: "La playlist est requise.")]
     #[ORM\ManyToOne(inversedBy: 'formations')]
     private ?Playlist $playlist = null;
 
@@ -143,6 +159,7 @@ class Formation
     {
         if (!$this->categories->contains($category)) {
             $this->categories->add($category);
+            $category->addFormation($this); // Synchro inverse
         }
 
         return $this;
@@ -151,6 +168,7 @@ class Formation
     public function removeCategory(Categorie $category): static
     {
         $this->categories->removeElement($category);
+        $category->removeFormation($this); // Synchro inverse
 
         return $this;
     }

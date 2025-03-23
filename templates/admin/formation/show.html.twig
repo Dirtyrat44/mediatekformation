@@ -1,0 +1,60 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Mediatek86 | Détail de la formation{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-info mb-3">Détails de la formation</h1>
+
+        <div class="d-flex gap-2 mb-3">
+            <a href="{{ path('admin_formation_edit', {'id': formation.id}) }}" class="btn btn-info btn-sm" role="button" title="Modifier cette formation">Modifier</a>
+            {{ include('admin/formation/_delete_form.html.twig', { formation: formation }) }}
+        </div>
+        <div class="card shadow-sm p-4 mb-4">
+            <div class="row mb-3">
+                <div class="col-md-9">
+                    <label class="form-label fw-bold">Titre</label>
+                    <div class="form-control">{{ formation.title }}</div>
+                </div>
+                <div class="col-md-3">
+                    <label class="form-label fw-bold">Date de publication</label>
+                    <div class="form-control">
+                        {{ formation.publishedAt ? formation.publishedAt|date('Y-m-d') : '—' }}
+                    </div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Description</label>
+                <div class="form-control">{{ formation.description }}</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold d-block">Catégories</label>
+                <div class="d-flex flex-wrap gap-3">
+                    {% for categorie in categories %}
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" disabled
+                                   {% if categorie in formation.categories %}checked{% endif %}>
+                            <label class="form-check-label">{{ categorie.name }}</label>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Playlist</label>
+                <div class="form-control">{{ formation.playlist.name }}</div>
+            </div>
+            <div class="mb-3">
+                <label class="form-label fw-bold">Vidéo</label>
+                {% if formation.videoId %}
+                    <div class="ratio ratio-16x9">
+                        <iframe src="https://www.youtube.com/embed/{{ formation.videoId }}" title="Vidéo de la formation" allowfullscreen></iframe>
+                    </div>
+                {% else %}
+                    <div class="form-control">Aucune vidéo trouvée</div>
+                {% endif %}
+            </div>
+        </div>
+
+        <a href="{{ path('admin_formation_index') }}" class="btn btn-info btn-sm" role="button" title="Retour à la liste des formations">← Retour à la liste des formations</a>
+    </div>
+{% endblock %}

@@ -1,0 +1,54 @@
+{% extends "basefront.html.twig" %}
+
+{% block title %}Centre d'administration{% endblock %}
+
+{% block top %}
+    
+    <div class="container">
+        <!-- titre -->
+        <div class="text-left">
+            <img src="{{ app.request.getBasePath()~'/banniere.jpg' }}" alt="Bannière du site">
+        </div>
+        <!-- menu -->
+        <nav class="navbar navbar-expand-lg navbar-light bg-light">
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('admin_formation_index') }}">Formations</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('playlists') }}">Playlists</a>
+                    </li>                    
+                </ul>
+            </div>
+        </nav>        
+    </div>
+    <div class="container mt-2">
+        <div class="alert alert-warning text-center" role="alert">
+            <strong>Interface d'administration</strong>
+        </div>
+    </div>
+{% endblock %}
+
+{% block body %}
+    <div class="container mt-3">
+        {{ include('admin/partial/_flash_messages.html.twig') }}
+    </div>
+    {{ parent() }}
+{% endblock %}
+
+{% block stylesheets %}
+<style>
+    input[type="checkbox"]:checked {
+        accent-color: #0dcaf0;
+    }
+    
+    .form-check-input:checked {
+        background-color: #0dcaf0;
+        border-color: #0dcaf0;
+    }
+</style>
+{% endblock %}

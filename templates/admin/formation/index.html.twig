@@ -1,0 +1,119 @@
+{% extends "baseback.html.twig" %}
+
+{% block title %}Mediatek86 | Administration Formations{% endblock %}
+
+{% block body %}
+    {{ include('admin/partial/_flash_messages.html.twig') }}
+
+    <div class="d-flex left-content mb-3">
+        <a href="{{ path('admin_formation_new') }}"
+           class="btn btn-info btn-sm"
+           role="button"
+           title="Ajouter une nouvelle formation">
+            <strong>+ Ajouter une formation</strong>
+        </a>
+    </div>
+
+    <table class="table table-striped" aria-label="Liste des formations disponibles avec filtres et tri">
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">
+                    formation<br />
+                    <a href="{{ path('admin_formation_sort', {champ:'title', ordre:'ASC'}) }}"
+                       class="btn btn-info btn-sm"
+                       title="Trier par titre croissant">↑</a>
+                    <a href="{{ path('admin_formation_sort', {champ:'title', ordre:'DESC'}) }}"
+                       class="btn btn-info btn-sm"
+                       title="Trier par titre décroissant">↓</a>
+                    <form class="form-inline mt-1 d-flex align-items-center gap-1"
+                          method="POST"
+                          action="{{ path('admin_formation_recherche', {champ:'title'}) }}">
+                        <input type="text" class="sm" name="recherche"
+                               title="Filtrer par titre"
+                               value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('filtre_title') }}">
+                        <button type="submit" class="btn btn-info btn-sm" title="Filtrer par titre">filtrer</button>
+                    </form>
+                </th>
+                <th class="text-left align-top" scope="col">
+                    playlist<br />
+                    <a href="{{ path('admin_formation_sort', {table:'playlist', champ:'name', ordre:'ASC'}) }}"
+                       class="btn btn-info btn-sm" title="Trier par playlist A-Z">↑</a>
+                    <a href="{{ path('admin_formation_sort', {table:'playlist', champ:'name', ordre:'DESC'}) }}"
+                       class="btn btn-info btn-sm" title="Trier par playlist Z-A">↓</a>
+                    <form class="form-inline mt-1 d-flex align-items-center gap-1"
+                          method="POST"
+                          action="{{ path('admin_formation_recherche', {champ:'name', table:'playlist'}) }}">
+                        <input type="text" class="sm" name="recherche"
+                               title="Filtrer par playlist"
+                               value="{% if valeur|default and table|default and table=='playlist' %}{{ valeur }}{% endif %}">
+                        <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                        <button type="submit" class="btn btn-info btn-sm" title="Filtrer par playlist">filtrer</button>
+                    </form>
+                </th>
+                <th class="text-left align-top" scope="col">
+                    catégories
+                    <form class="form-inline mt-1 d-flex align-items-center gap-1"
+                          method="POST"
+                          action="{{ path('admin_formation_recherche', {champ:'id', table:'categories'}) }}">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche"
+                                title="Filtrer par catégorie"
+                                onchange="this.form.submit()">
+                            <option value="">Choisir une catégorie</option>
+                            {% for categorie in categories %}
+                                <option
+                                    {% if valeur|default and valeur==categorie.id %}
+                                        selected
+                                    {% endif %}
+                                    value="{{ categorie.id }}">{{ categorie.name }}
+                                </option>
+                            {% endfor %}
+                        </select>
+                        <input type="hidden" name="_token" value="{{ csrf_token('filtre_id') }}">
+                    </form>
+                </th>
+                <th class="text-center align-top" scope="col">
+                    date<br />
+                    <a href="{{ path('admin_formation_sort', {champ:'publishedAt', ordre:'ASC'}) }}"
+                       class="btn btn-info btn-sm" title="Trier par date croissante">↑</a>
+                    <a href="{{ path('admin_formation_sort', {champ:'publishedAt', ordre:'DESC'}) }}"
+                       class="btn btn-info btn-sm" title="Trier par date décroissante">↓</a>
+                </th>        
+            </tr>
+        </thead>
+        <tbody>
+            {% for formation in formations %}
+                <tr class="align-middle">
+                    <td>
+                        <h5 class="text-info mb-3">{{ formation.title }}</h5>
+                        {{ include('admin/partial/_action_buttons.html.twig', {
+                            entity: formation,
+                            edit_route: 'admin_formation_edit',
+                            delete_route: 'admin_formation_delete'
+                        }) }}
+                    </td>
+                    <td class="text-left">
+                        {{ formation.playlist.name }}
+                    </td>
+                    <td class="text-left">
+                        {% for categorie in formation.categories %}
+                            {{ categorie.name }}<br />
+                        {% endfor %}
+                    </td>
+                    <td class="text-center">
+                        {{ formation.publishedatstring }}
+                    </td>
+                    <td class="text-center">
+                        {% if formation.miniature %}
+                            <a href="{{ path('admin_formation_showone', {id: formation.id}) }}" title="Voir la formation">
+                                <img src="{{ formation.miniature }}" alt="Miniature de la formation {{ formation.title }}">
+                            </a>
+                        {% else %}
+                            <span class="text-muted">Aucune</span>
+                        {% endif %}
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+
+<div class="row">
+    <div class="col-md-9">
+        {{ form_row(form.title) }}
+    </div>
+    <div class="col-md-3">
+        {{ form_row(form.publishedAt) }}
+    </div>
+</div>
+{{ form_row(form.description) }}
+<div class="form-group mb-3">
+    <label class="form-label">{{ form.categories.vars.label }}</label>
+    <div class="d-flex flex-wrap gap-3">
+        {% for child in form.categories %}
+            <div class="form-check form-check-inline">
+                {{ form_widget(child) }}
+                {{ form_label(child) }}
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{{ form_row(form.playlist) }}
+{{ form_row(form.videoId) }}
+
+<button type="submit" class="btn btn-info btn-sm" title="Créer une formation">
+    {{ button_label|default('Valider') }}
+</button>
+
+{{ form_end(form) }}
