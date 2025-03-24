@@ -1,0 +1,48 @@
+{% extends "baseback.html.twig" %}
+
+{% block title %}Mediatek86 | Modifier la Playlist{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-info mb-4">Modifier la playlist</h1>
+        <a href="{{ path('admin_playlist_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux playlists">← Retour à la liste des playlists</a>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm p-4 mb-4">
+                    {{ include('admin/playlist/_form.html.twig', {
+                        form: form,
+                        button_label: 'Modifier',
+                        playlistcategories: playlistcategories,
+                        formationCount: formationCount,
+                        is_edit: true
+                    }) }}
+                </div>
+
+                <a href="{{ path('admin_playlist_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux playlists">← Retour à la liste des playlists</a>                
+            </div>
+
+            <div class="col-md-6">                
+                {% for formation in playlistformations %}
+                    <div class="row mt-1">
+                        <div class="col-md-auto">
+                            {% if formation.miniature %}
+                                <a href="{{ path('admin_formation_showone', {id: formation.id}) }}">
+                                    <img src="{{ formation.miniature }}" alt="Miniature de {{ formation.title }}" class="img-thumbnail" width="120">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <a href="{{ path('admin_formation_showone', {id: formation.id}) }}"
+                               class="link-secondary text-decoration-none">
+                                {{ formation.title }}
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucune formation rattachée à cette playlist.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

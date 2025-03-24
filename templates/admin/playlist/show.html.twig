@@ -1,0 +1,70 @@
+{% extends "baseback.html.twig" %}
+
+{% block title %}Mediatek86 | Détail de la Playlist{% endblock %}
+
+{% block body %}
+    <div class="container mt-4">
+        <h1 class="text-info mb-3">Détail de la playlist</h1>
+        
+        <div class="my-3">
+                        {{ include('admin/partial/_action_buttons.html.twig', {
+                            entity: playlist,
+                            title: playlist.name,
+                            edit_route: 'admin_playlist_edit',
+                            delete_route: 'admin_playlist_delete',
+                            delete_disabled: playlist.getFormationCount() > 0
+                        }) }}
+        </div>
+        
+        <a href="{{ path('admin_playlist_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux playlists">← Retour à la liste des playlists</a>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card shadow-sm p-4 mb-4">
+                    <h4 class="text-info">{{ playlist.name }}</h4> 
+                    <div class="mb-1">
+                        <label class="form-label"><strong>Nombre de vidéos :</strong></label> {{ formationCount }}
+                    </div>
+                    <div class="mb-1">
+                        <label class="form-label"><strong>Catégories : </strong></label><br/>
+                        {% for categorieName in playlist.getCategoriesPlaylist %}
+                            <span class="btn btn-info btn-sm disabled me-1" role="button" aria-disabled="true">
+                                {{ categorieName }}
+                            </span>
+                        {% else %}
+                            <span class="text-muted"><strong>Aucune catégorie</strong></span>
+                        {% endfor %}
+                    </div>   
+                    <div class="mb-2">
+                        <label class="form-label"><strong>Description :</strong></label>
+                        <p>{{ playlist.description|default('Aucune description')|nl2br }}</p>
+                    </div>                                     
+                </div>
+
+                <a href="{{ path('admin_playlist_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux playlists">← Retour à la liste des playlists</a>
+            </div>
+
+            <div class="col-md-6">                
+                {% for formation in playlistformations %}
+                    <div class="row mt-1">
+                        <div class="col-md-auto">
+                            {% if formation.miniature %}
+                                <a href="{{ path('admin_formation_showone', {id: formation.id}) }}">
+                                    <img src="{{ formation.miniature }}" alt="Miniature de {{ formation.title }}" class="img-thumbnail" width="120">
+                                </a>
+                            {% endif %}
+                        </div>
+                        <div class="col d-flex align-items-center">
+                            <a href="{{ path('admin_formation_showone', {id: formation.id}) }}"
+                               class="link-secondary text-decoration-none">
+                                {{ formation.title }}
+                            </a>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-muted">Aucune formation rattachée à cette playlist.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endblock %}

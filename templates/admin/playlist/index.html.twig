@@ -1,0 +1,91 @@
+{% extends 'baseback.html.twig' %}
+
+{% block title %}Mediatek86 | Administration Playlists{% endblock %}
+
+{% block body %}
+    {{ include('admin/partial/_flash_messages.html.twig') }}
+    
+    <div class="d-flex left-content mb-3">
+        <a href="{{ path('admin_playlist_new') }}"
+           class="btn btn-info btn-sm"
+           role="button"
+           title="Ajouter une nouvelle playlist">
+            <strong>+ Ajouter une playlist</strong>
+        </a>
+    </div>
+           
+    <table class="table table-striped" aria-label="Liste des playlists avec filtres et tri">        
+        <thead>
+            <tr>
+                <th class="text-left align-top" scope="col">
+                    playlist<br />
+                    <a href="{{ path('admin_playlists_sort', {champ:'name', ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true"><</a>
+                    <a href="{{ path('admin_playlists_sort', {champ:'name', ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">></a>
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin_playlists_findallcontain', {champ:'name'}) }}">
+                        <div class="form-group mr-1 mb-2">
+                            <input type="text" class="sm" name="recherche" 
+                                   value="{% if valeur|default and not table|default %}{{ valeur }}{% endif %}">
+                            <input type="hidden" name="_token" value="{{ csrf_token('filtre_name') }}">
+                            <button type="submit" class="btn btn-info mb-2 btn-sm">filtrer</button>
+                        </div>
+                    </form>                    
+                </th>
+                <th class="text-left align-top" scope="col">
+                    catégories
+                    <form class="form-inline mt-1" method="POST" action="{{ path('admin_playlists_findallcontain', {champ:'id', table:'categories'}) }}">
+                        <select class="form-select form-select-sm" name="recherche" id="recherche" onchange="this.form.submit()">
+                            <option value=""></option>
+                            {% for categorie in categories %}
+                                <option 
+                                    {% if valeur|default and valeur==categorie.id %} 
+                                        selected
+                                    {% endif %} 
+                                    value="{{ categorie.id }}">{{ categorie.name }}
+                                </option>
+                            {% endfor %}
+                        </select>                    
+                    </form>            
+                </th>                
+                <th class="text-center align-top" scope="col">
+                    Nombre de formations<br />
+                    <a href="{{ path('admin_playlists_sortByFormationCount', {ordre:'ASC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">↑</a>
+                    <a href="{{ path('admin_playlists_sortByFormationCount', {ordre:'DESC'}) }}" class="btn btn-info btn-sm active" role="button" aria-pressed="true">↓</a>
+                </th>                			
+            </tr>
+        </thead>
+        <tbody>
+            {% if playlists|length > 0 %}
+                {% for k in 0..playlists|length-1 %}
+                    <tr class="align-middle">
+                        <td>
+                            <h5 class="text-info">
+                                {{ playlists[k].name }}
+                            </h5>
+                            {{ include('admin/partial/_action_buttons.html.twig', {
+                                entity: playlists[k],
+                                edit_route: 'admin_playlist_edit',
+                                delete_route: 'admin_playlist_delete',
+                                delete_disabled: playlists[k].getFormationCount() > 0,
+                                title: playlists[k].name
+                            }) }}
+                        </td>                 
+                        <td class="text-left">
+                            {% set categories = playlists[k].categoriesplaylist %}
+                            {% if categories|length > 0  %}
+                                {% for c in 0..categories|length-1 %}
+                                    &nbsp;{{ categories[c] }}                                  
+                                {% endfor %}
+                            {% endif %}
+                        </td>  
+                        <td class="text-center">
+                            {{ playlists[k].getFormationCount() }}
+                        </td>        					
+                        <td class="text-center">
+                            <a href="{{ path('admin_playlist_showone', {id:playlists[k].id}) }}" class="btn btn-secondary">Voir détail</a>
+                        </td> 					
+                    </tr>
+                {% endfor %}	
+            {% endif %}
+        </tbody>
+    </table>
+{% endblock %}

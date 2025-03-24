@@ -6,9 +6,12 @@ use App\Repository\PlaylistRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
+#[UniqueEntity('name')]
 class Playlist
 {
     #[ORM\Id]
@@ -16,9 +19,14 @@ class Playlist
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $name = null;
 
+    #[Assert\Length(
+        max: 1000,
+        maxMessage: "La description ne doit pas dépasser {{ limit }} caractères."
+    )]
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 

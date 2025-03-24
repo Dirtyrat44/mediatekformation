@@ -3,10 +3,11 @@
 {% block title %}Mediatek86 | Modifier la formation{% endblock %}
 
 {% block body %}
-    <div class="container mt-4">
+    <div class="container mt-4">        
         <h1 class="text-info mb-4">Modifier la formation</h1>
+        <a href="{{ path('admin_formation_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux formations">← Retour à la liste des formations</a>
         <div class="card shadow-sm p-4 mb-4">
-            {{ include('admin/formation/_form.html.twig', { 'button_label': 'Mettre à jour' }) }}
+            {{ include('admin/formation/_form.html.twig', { 'button_label': 'Modifier' }) }}
         </div>
 
         <a href="{{ path('admin_formation_index') }}" class="btn btn-info btn-sm mb-2" role="button" title="Retour aux formations">← Retour à la liste des formations</a>

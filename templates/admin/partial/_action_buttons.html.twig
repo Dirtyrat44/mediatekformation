@@ -1,15 +1,30 @@
+{% set rawTitle = entity.title is defined ? entity.title : title|default('cet élément') %}
+
+{# Masquer au delà de 40 caractères #}
+{% set resolvedTitle = rawTitle|length > 40 ? rawTitle|slice(0, 37) ~ '...' : rawTitle %}
+
+{% set is_disabled = delete_disabled|default(entity.getFormationCount is defined and entity.getFormationCount() > 0) %}
+
 <div class="d-flex gap-2">
     {% if edit_route is defined %}
-        <a href="{{ path(edit_route, { id: entity.id }) }}"class="btn btn-info btn-sm" title="Modifier {{ entity.title is defined ? entity.title : 'cet élément' }}">Modifier</a>
+        <a href="{{ path(edit_route, { id: entity.id }) }}"
+           class="btn btn-info btn-sm"
+           title="Modifier {{ resolvedTitle }}">
+            Modifier
+        </a>
     {% endif %}
 
     {% if delete_route is defined %}
         <form method="post"
               action="{{ path(delete_route, { id: entity.id }) }}"
-              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer {{ entity.title is defined ? entity.title : 'cet élément' }} ?');"
+              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer {{ resolvedTitle }} ?');"
               class="d-inline">
             <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ entity.id) }}">
-            <button class="btn btn-danger btn-sm" title="Supprimer {{ entity.title is defined ? entity.title : 'cet élément' }}">Supprimer</button>
+            <button class="btn btn-danger btn-sm"
+                    title="Supprimer {{ resolvedTitle }}"
+                    {% if is_disabled %}disabled{% endif %}>
+                Supprimer
+            </button>
         </form>
     {% endif %}
 </div>

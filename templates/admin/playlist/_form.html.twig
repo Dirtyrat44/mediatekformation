@@ -1,0 +1,36 @@
+{{ form_start(form, {'attr': {'class': 'needs-validation'}}) }}
+
+<div class="mb-2">
+    <strong>{{ form_label(form.name, 'Nom de la playlist', {'label_attr': {'class': 'form-label'}}) }}</strong>
+    {{ form_widget(form.name, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.name) }}
+</div>
+
+{%  if is_edit|default(false) %}
+<div class="mb-2">
+    <label class="form-label"><strong>Catégories :</strong></label><br>
+    {% for categorieName in playlist.getCategoriesPlaylist %}
+        <span class="btn btn-info btn-sm disabled me-1" role="button" aria-disabled="true">{{ categorieName }}</span>
+    {% else %}
+        <span class="text-muted"><strong>Aucune catégorie</strong></span>
+    {% endfor %}
+</div>
+{% endif %}
+
+{% if is_edit|default(false) %}
+<div class="mb-1">
+    <label class="form-label"><strong>Nombre de vidéos :</strong></label> {{ formationCount }}
+</div>
+{% endif %}
+
+<div class="mb-2">
+    <strong>{{ form_label(form.description) }}</strong>
+    {{ form_widget(form.description) }}
+    {{ form_errors(form.description) }}
+</div>
+
+<button type="submit" class="btn btn-info btn-sm" title="Mettre à jour la playlist">
+    {{ button_label|default('Modifier') }}
+</button>
+
+{{ form_end(form) }}
