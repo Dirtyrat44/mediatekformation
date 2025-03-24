@@ -1,0 +1,53 @@
+{% extends "baseback.html.twig" %}
+
+{% block title %}Mediatek86 | Administration Catégories{% endblock %}
+
+{% block body %}
+    {{ include('admin/partial/_flash_messages.html.twig') }}
+
+    <div class="mb-3">
+        {{ form_start(form, {'attr': {'class': 'd-flex align-items-center gap-2'}}) }}            
+
+        {{ form_widget(form.name, {
+        'attr': {
+            'class': 'form-control form-control-sm w-auto',
+            'placeholder': 'Créer une catégorie'
+        }
+    }) }}
+
+        <button type="submit"
+                class="btn btn-info btn-sm"
+                title="Ajouter cette catégorie">
+            <strong>+ Ajouter une catégorie</strong>
+        </button>
+
+        {{ form_end(form) }}
+    </div>
+
+
+    <table class="table table-striped" aria-label="Liste des catégories">
+        <thead class="visually-hidden">
+            <tr>
+                <th scope="col">Nom</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categorie in categories %}
+                <tr>
+                    <td colspan="2">
+                        <h5 class="text-info mb-2">{{ categorie.name }}</h5>
+                        {{ include('admin/partial/_action_buttons.html.twig', {
+                            entity: categorie,                            
+                            delete_route: 'admin_categorie_delete',                            
+                            delete_disabled: categorie.formations is not empty
+                        }) }}
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="2" class="text-center text-muted">Aucune catégorie enregistrée.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

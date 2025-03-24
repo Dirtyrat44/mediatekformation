@@ -6,7 +6,10 @@ use App\Repository\CategorieRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Bridge\Validator\Constraints\UniqueEntity;
 
+#[UniqueEntity('name')]
 #[ORM\Entity(repositoryClass: CategorieRepository::class)]
 class Categorie
 {
@@ -15,6 +18,7 @@ class Categorie
     #[ORM\Column]
     private ?int $id = null;
 
+    #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ORM\Column(length: 50, nullable: true)]
     private ?string $name = null;
 
