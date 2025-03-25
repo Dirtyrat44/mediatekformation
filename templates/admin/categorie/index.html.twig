@@ -39,7 +39,8 @@
                         {{ include('admin/partial/_action_buttons.html.twig', {
                             entity: categorie,                            
                             delete_route: 'admin_categorie_delete',                            
-                            delete_disabled: categorie.formations is not empty
+                            delete_disabled: categorie.formations is not empty,
+                            title: categorie.name
                         }) }}
                     </td>
                 </tr>

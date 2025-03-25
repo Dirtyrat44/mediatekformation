@@ -10,20 +10,58 @@
         </div>
         <!-- menu -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('formations') }}">Formations</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ path('playlists') }}">Playlists</a>
-                    </li>                    
-                </ul>
-            </div>
-        </nav>        
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse d-flex justify-content-between" id="navbarSupportedContent">
+
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('formations') }}">Formations</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('playlists') }}">Playlists</a>
+                        </li>
+                    </ul>
+
+                    <!-- Connexion / Déconnexion -->
+                    <div class="d-flex align-items-center gap-2">
+                        {% if app.user %}
+
+                            {% set adminLink = {
+                                'playlists': path('admin_playlist_index'),
+                                'formations': path('admin_formation_index'),
+                                'accueil': path('admin_formation_index')
+                            }[app.request.attributes.get('_route')] ?? path('admin_formation_index') %}
+
+                            <a href="{{ adminLink }}"
+                               class="btn btn-info btn-sm"
+                               title="Accéder au back-office">
+                                <i class="fas fa-cogs" aria-hidden="true"></i> Espace administration
+                            </a>
+
+                            <a href="{{ path('app_logout') }}"
+                               class="btn btn-info btn-danger btn-sm"
+                               title="Se déconnecter">
+                                <i class="fas fa-sign-out-alt" aria-hidden="true"></i> Déconnexion
+                            </a>
+                        {% else %}
+                            <a href="{{ path('app_login') }}"
+                               class="btn btn-info btn-sm"
+                               title="Se connecter à l'espace d'administration">
+                                <i class="fas fa-sign-in-alt" aria-hidden="true"></i> Connexion
+                            </a>
+
+                        {% endif %}
+                    </div>
+
+
+
+                </div>
+        </nav>
+
+
     </div>
 {% endblock %}
 {% block body %}{% endblock %}
@@ -32,9 +70,9 @@
         <footer>
             <hr>
             <p><small><em>
-                Consultez nos <a class="link-secondary" href="{{ path('cgu') }}">Conditions Générales d'Utilisation</a>
-            </em></small></p>
-            
+                        Consultez nos <a class="link-secondary" href="{{ path('cgu') }}">Conditions Générales d'Utilisation</a>
+                    </em></small></p>
+
         </footer>
     </div>
 {% endblock %}
