@@ -14,7 +14,6 @@ use Doctrine\ORM\Mapping as ORM;
 #[UniqueEntity('title')]
 class Formation
 {
-
     /**
      * Début de chemin vers les images
      */
