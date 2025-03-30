@@ -5,6 +5,14 @@ namespace App\tests\Repository;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use App\Entity\Categorie;
 
+/**
+ * Tests du repository CategorieRepository
+ *
+ * Vérifie l'ajout et la suppression d'une catégorie,
+ * ainsi que la récupération des catégories liées à une playlist
+ *
+ * @author arthurponcin
+ */
 class CategorieRepositoryTest extends KernelTestCase {
 
     private const REPOSITORY_CLASS = \App\Repository\CategorieRepository::class;
@@ -12,18 +20,19 @@ class CategorieRepositoryTest extends KernelTestCase {
     public function testAddAndRemove() {
         self::bootKernel();
         $repository = static::getContainer()->get(self::REPOSITORY_CLASS);
+        $name = 'Categorie add and remove';
 
         $categorie = new Categorie();
-        $categorie->setName('Categorie add and remove');
+        $categorie->setName($name);
         $repository->add($categorie);
 
-        $found = $repository->findOneBy(['name' => 'Categorie add and remove']);
+        $found = $repository->findOneBy(['name' => $name]);
 
         $this->assertNotNull($found);
         $this->assertEquals($found->getName(), $categorie->getName());
 
         $repository->remove($found);
-        $notFound = $repository->findOneBy(['name' => 'Categorie add and remove']);
+        $notFound = $repository->findOneBy(['name' => $name]);
         $this->assertNull($notFound);
     }
 

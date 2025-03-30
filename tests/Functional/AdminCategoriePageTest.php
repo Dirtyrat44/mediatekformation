@@ -7,15 +7,27 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Admin;
 
+/**
+ * Test fonctionnel du back office des catégories
+ *
+ * Ces test vérifie que la page admin des catégories est bien accessible,
+ * et que le processus de déconnexion redirige correctement l'utilisateur
+ * @author arthurponcin
+ */
 class AdminCategoriePageTest extends WebTestCase
 {
+    /**
+     * Client HTTP simule un navigateur
+     * @var type
+     */
     private $client;
+    /**
+     * EntityManager Doctrine pour accéder à la BDD
+     * @var type
+     */
     private $entityManager;
     private $adminUser;
-    
-    private const TEMPLATE_CSS = 'table tbody tr:first-child td';
-    private const TEMPLATE_ALLLINES = 'table tbody tr';
-
+  
     protected function setUp(): void
     {
         $this->client = static::createClient();
@@ -49,6 +61,12 @@ class AdminCategoriePageTest extends WebTestCase
         $this->assertSelectorTextContains('div', "Accueil Formations Playlists Catégories Déconnexion");
     }
     
+    /**
+     * Vérifie que la déconnexion fonctionne
+     * L'utilisateur est redirigé sur la page d'accueil
+     * l'accès au back office est refusé puis redirigé vers /login
+     * @return void
+     */
     public function testLogout(): void
     {
         $url = '/admin/categorie/';

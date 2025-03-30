@@ -16,6 +16,14 @@ use Symfony\Component\Security\Http\Authenticator\Passport\Passport;
 use Symfony\Component\Security\Http\SecurityRequestAttributes;
 use Symfony\Component\Security\Http\Util\TargetPathTrait;
 
+/**
+ * Gère l'authentification par formulaire de connexion
+ *
+ * Utilisé pour connecter les administrateurs via un formulaire personnalisé
+ * Vérifie les identifiants, les tokens CSRF et redirige après succès
+ *
+ * @author arthurponcin
+ */
 class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 {
     use TargetPathTrait;
@@ -26,24 +34,31 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
     {
     }
 
-  public function authenticate(Request $request): Passport
-{
-    $username = $request->request->get('_username', '');
-    $password = $request->request->get('_password', '');
+    public function authenticate(Request $request): Passport
+    {
+        $username = $request->request->get('_username', '');
+        $password = $request->request->get('_password', '');
 
-    $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
+        $request->getSession()->set(SecurityRequestAttributes::LAST_USERNAME, $username);
 
-    return new Passport(
-        new UserBadge($username),
-        new PasswordCredentials($password),
-        [
-            new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token', '')),
-            new RememberMeBadge(),
-        ]
-    );
-}
+        return new Passport(
+            new UserBadge($username),
+            new PasswordCredentials($password),
+            [
+                new CsrfTokenBadge('authenticate', $request->request->get('_csrf_token', '')),
+                new RememberMeBadge(),
+            ]
+        );
+    }
 
-
+    /**
+     * Redirige vers la page demandée initialement ou vers l'index admin
+     *
+     * @param Request $request
+     * @param TokenInterface $token
+     * @param string $firewallName
+     * @return Response|null
+     */
     public function onAuthenticationSuccess(Request $request, TokenInterface $token, string $firewallName): ?Response
     {
         if ($targetPath = $this->getTargetPath($request->getSession(), $firewallName)) {

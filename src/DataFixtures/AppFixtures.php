@@ -8,8 +8,21 @@ use App\Entity\Categorie;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
+/**
+ * Fixture pour insérer des données de test
+ *
+ * Sert à alimenter la base de données de test
+ *
+ * @author arthurponcin
+ */
 class AppFixtures extends Fixture {
 
+     /**
+     * Méthode appelée automatiquement pour insérer les données en base.
+     *
+     * @param ObjectManager $manager
+     * @return void
+     */
     public function load(ObjectManager $manager): void {
         $playlists = [];
         for ($i = 0; $i < 4; $i++) {

@@ -5,6 +5,14 @@ namespace App\tests\Repository;
 use App\Entity\Playlist;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * Tests du repository PlaylistRepository
+ *
+ * Vérifie l’ajout et la suppression de playlists, le tri par nom ou nombre de formations,
+ * ainsi que la recherche par champ ou par relation avec les catégories
+ *
+ * @author arthurponcin
+ */
 class PlaylistRepositoryTest extends KernelTestCase {
 
     private const REPOSITORY_CLASS = \App\Repository\PlaylistRepository::class;

@@ -7,6 +7,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Admin;
 
+/**
+ * Tests fonctionnels du backoffice des playlists
+ *
+ * Vérifie les fonctionnalités de la page admin des playlists :
+ * tri par nom ou nombre de formations, filtres par catégorie ou nom,
+ * et accès à la page de modification
+ *
+ * @author arthurponcin
+ */
 class AdminPlaylistPageTest extends WebTestCase
 {
     private $client;

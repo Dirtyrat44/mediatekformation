@@ -7,16 +7,34 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 
+/**
+ * Entité représentant un administrateur de l'application.
+ *
+ * Implémente les interfaces UserInterface et PasswordAuthenticatedUserInterface de Symfony.
+ * Utilisée pour l'authentification dans le back-office.
+ *
+ * @author arthurponcin
+ */
 #[ORM\Entity(repositoryClass: AdminRepository::class)]
 #[ORM\Table(name: '`admin`')]
 #[ORM\UniqueConstraint(name: 'UNIQ_IDENTIFIER_USERNAME', fields: ['username'])]
 class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 {
+    /**
+     * Identifiant unique de l'admin
+     *
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+    /**
+     * Nom d'utilisateur
+     *
+     * @var string|null
+     */
     #[ORM\Column(length: 180)]
     private ?string $username = null;
 
@@ -53,6 +71,8 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
      * A visual identifier that represents this user.
      *
      * @see UserInterface
+     * 
+     * @return string
      */
     public function getUserIdentifier(): string
     {
@@ -75,6 +95,7 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @param list<string> $roles
+     * @return static
      */
     public function setRoles(array $roles): static
     {
@@ -85,12 +106,20 @@ class Admin implements UserInterface, PasswordAuthenticatedUserInterface
 
     /**
      * @see PasswordAuthenticatedUserInterface
+     * 
+     * @return string
      */
     public function getPassword(): string
     {
         return $this->password;
     }
 
+    /**
+     * Définit le mot de passe haché.
+     *
+     * @param string $password
+     * @return static
+     */
     public function setPassword(string $password): static
     {
         $this->password = $password;

@@ -4,6 +4,14 @@ namespace App\tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Tests fonctionnels de la page publique des playlists
+ *
+ * Vérifie le tri par nom ou nombre de formations, les filtres par catégorie ou nom,
+ * et l'accès à la page de détails d'une playlist
+ *
+ * @author arthurponcin
+ */
 class PlaylistPageTest extends WebTestCase
 {
 

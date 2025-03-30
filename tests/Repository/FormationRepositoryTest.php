@@ -6,6 +6,14 @@ use App\Entity\Playlist;
 use App\Entity\Formation;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 
+/**
+ * Tests du repository FormationRepository
+ *
+ * Vérifie les méthodes d’ajout, suppression, tri, recherche par champ ou relation
+ * Couvre également les méthodes spécifiques comme findAllLatest ou findAllForOnePlaylist
+ *
+ * @author arthurponcin
+ */
 class FormationRepositoryTest extends KernelTestCase
 {
     private const REPOSITORY_CLASS = \App\Repository\FormationRepository::class;

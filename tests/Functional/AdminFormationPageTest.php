@@ -7,6 +7,15 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use App\Entity\Admin;
 
+/**
+ * Tests fonctionnels de la page admin des formations
+ *
+ * Vérifie les accès, les tris (titre, date, playlist),
+ * les filtres (par catégorie, titre, playlist),
+ * et la navigation vers la page de modification
+ *
+ * @author arthurponcin
+ */
 class AdminFormationPageTest extends WebTestCase
 {
     private $client;

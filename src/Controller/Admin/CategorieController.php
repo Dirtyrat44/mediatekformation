@@ -36,6 +36,13 @@ class CategorieController extends AbstractController {
         $this->categorieRepository = $categorieRepository;
     }
 
+    /**
+     * Affiche toutes les catégories et permet d’en ajouter une.
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
     #[Route('/', name: 'admin_categorie_index', methods: ['GET', 'POST'])]
     public function index(Request $request, EntityManagerInterface $em): Response {
         $categorie = new Categorie();
@@ -60,6 +67,13 @@ class CategorieController extends AbstractController {
         ]);
     }
 
+      /**
+     * Affiche un formulaire pour ajouter une nouvelle catégorie.
+     *
+     * @param Request $request
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/new', name: 'admin_categorie_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response {
         $categorie = new Categorie();
@@ -79,6 +93,12 @@ class CategorieController extends AbstractController {
         ]);
     }
 
+    /**
+     * Affiche les détails d’une catégorie.
+     *
+     * @param Categorie $categorie
+     * @return Response
+     */
     #[Route('/{id}', name: 'admin_categorie_show', methods: ['GET'])]
     public function show(Categorie $categorie): Response {
         return $this->render('admin/categorie/show.html.twig', [
@@ -86,6 +106,14 @@ class CategorieController extends AbstractController {
         ]);
     }
 
+    /**
+     * Modifie une catégorie existante.
+     *
+     * @param Request $request
+     * @param Categorie $categorie
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/{id}/edit', name: 'admin_categorie_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response {
         $form = $this->createForm(CategorieType::class, $categorie);
@@ -104,6 +132,14 @@ class CategorieController extends AbstractController {
         ]);
     }
 
+    /**
+     * Supprime une catégorie (si elle ne contient pas de formations).
+     *
+     * @param Request $request
+     * @param Categorie $categorie
+     * @param EntityManagerInterface $entityManager
+     * @return Response
+     */
     #[Route('/{id}', name: 'admin_categorie_delete', methods: ['POST'])]
     public function delete(Request $request, Categorie $categorie, EntityManagerInterface $entityManager): Response {
         if ($this->isCsrfTokenValid('delete' . $categorie->getId(), $request->getPayload()->get('_token'))) {

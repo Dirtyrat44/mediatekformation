@@ -90,7 +90,7 @@ class FormationController extends AbstractController
     }
 
     /**
-     * Permet de supprimer une fomartion
+     * Permet de supprimer une formation
      *
      * @param Request $request
      * @param Formation $formation

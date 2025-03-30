@@ -10,10 +10,20 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une playlist
+ * 
+ *  Une playlist peut contenir plusieurs formations
+ */
 #[ORM\Entity(repositoryClass: PlaylistRepository::class)]
 #[UniqueEntity('name')]
 class Playlist
 {
+    /**
+     * Id unique
+     *
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -87,6 +97,13 @@ class Playlist
        return $this->formations->count();
    }
 
+  /**
+   * Ajoute une formation à cette playlist.
+   * Met également à jour la propriété playlist de la formation
+   *
+   * @param Formation $formation
+   * @return static
+   */
     public function addFormation(Formation $formation): static
     {
         if (!$this->formations->contains($formation)) {
@@ -97,6 +114,13 @@ class Playlist
         return $this;
     }
 
+    /**
+     * Supprime une formation
+     * Met également à jour la propriété playlist de la formation
+     *
+     * @param Formation $formation
+     * @return static
+     */
     public function removeFormation(Formation $formation): static
     {
         if ($this->formations->removeElement($formation) && $formation->getPlaylist() === $this) {
@@ -107,6 +131,8 @@ class Playlist
     }
     
     /**
+     * Retourne une collection des noms des catégories liées aux formations de la playlist
+     *
      * @return Collection<int, string>
      */
     public function getCategoriesPlaylist(): Collection

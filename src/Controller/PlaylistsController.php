@@ -39,6 +39,14 @@ class PlaylistsController extends AbstractController
      * @var CategorieRepository
      */
     private CategorieRepository $categorieRepository;
+    
+    /**
+     * Constructeur
+     *
+     * @param PlaylistRepository $playlistRepository
+     * @param CategorieRepository $categorieRepository
+     * @param FormationRepository $formationRespository
+     */
     public function __construct(
         PlaylistRepository $playlistRepository,
         CategorieRepository $categorieRepository,
@@ -50,6 +58,8 @@ class PlaylistsController extends AbstractController
             }
 
     /**
+     * Affiche les playlists
+     * 
      * @Route("/playlists", name="playlists")
      * @return Response
      */
@@ -64,6 +74,14 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+     * Trie les playlists selon champ et ordre
+     *
+     * @param type $champ
+     * @param type $ordre
+     * @return Response
+     * @throws type
+     */
     #[Route('/playlists/tri/{champ}/{ordre}', name: 'playlists.sort')]
     public function sort($champ, $ordre): Response
     {
@@ -82,6 +100,12 @@ class PlaylistsController extends AbstractController
         ]);
     }
     
+    /**
+     * Trie les playlists par nombre de formations
+     *
+     * @param string $ordre
+     * @return Response
+     */
     #[Route('/playlists/tri/formations/{ordre}', name: 'playlists.sortByFormationCount')]
     public function sortByFormationCount(string $ordre): Response
     {
@@ -94,6 +118,14 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+     * Filtre les playlists par un champ
+     *
+     * @param type $champ
+     * @param Request $request
+     * @param type $table
+     * @return Response
+     */
     #[Route('/playlists/recherche/{champ}/{table}', name: 'playlists.findallcontain')]
     public function findAllContain($champ, Request $request, $table = ""): Response
     {
@@ -108,6 +140,12 @@ class PlaylistsController extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche une playlist en détail
+     *
+     * @param type $id
+     * @return Response
+     */
     #[Route('/playlists/playlist/{id}', name: 'playlists.showone')]
     public function showOne($id): Response
     {

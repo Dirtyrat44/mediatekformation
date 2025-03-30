@@ -4,6 +4,15 @@ namespace App\tests\Functional;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
 
+/**
+ * Tests fonctionnels de la page publique des formations
+ *
+ * Vérifie les fonctionnalités principales côté utilisateur :
+ * tri par titre, date et playlist, filtres par catégorie ou nom,
+ * et accès à la page de détails d'une formation
+ *
+ * @author arthurponcin
+ */
 class FormationPageTest extends WebTestCase
 {
 

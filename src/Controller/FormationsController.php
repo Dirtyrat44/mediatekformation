@@ -10,7 +10,8 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
 /**
- * Controleur des formations
+ * Controleur des formations côté front
+ * Gère l'affichage des formations, les tris, les filtres et les détails d'une formation.
  *
  * @author emds
  */
@@ -31,12 +32,23 @@ class FormationsController extends AbstractController
      */
     private $categorieRepository;
 
+    /**
+     * Constructeur
+     * 
+     * @param FormationRepository $formationRepository
+     * @param CategorieRepository $categorieRepository
+     */
     public function __construct(FormationRepository $formationRepository, CategorieRepository $categorieRepository)
     {
         $this->formationRepository = $formationRepository;
         $this->categorieRepository = $categorieRepository;
     }
 
+    /**
+     * Affiche toutes les formations
+     *
+     * @return Response
+     */
     #[Route('/formations', name: 'formations')]
     public function index(): Response
     {
@@ -48,6 +60,14 @@ class FormationsController extends AbstractController
         ]);
     }
 
+    /**
+     * Trie les formations avec champ et ordre
+     * 
+     * @param type $champ
+     * @param type $ordre
+     * @param type $table
+     * @return Response
+     */
     #[Route('/formations/tri/{champ}/{ordre}/{table}', name: 'formations.sort')]
     public function sort($champ, $ordre, $table = ""): Response
     {
@@ -59,6 +79,14 @@ class FormationsController extends AbstractController
         ]);
     }
 
+    /**
+     * Filtre les formations selon valeur contenue dans un champ
+     *
+     * @param type $champ
+     * @param Request $request
+     * @param type $table
+     * @return Response
+     */
     #[Route('/formations/recherche/{champ}/{table}', name: 'formations.findallcontain')]
     public function findAllContain($champ, Request $request, $table = ""): Response
     {
@@ -73,6 +101,12 @@ class FormationsController extends AbstractController
         ]);
     }
 
+    /**
+     * Affiche les détails d'une formation
+     * 
+     * @param type $id
+     * @return Response
+     */
     #[Route('/formations/formation/{id}', name: 'formations.showone')]
     public function showOne($id): Response
     {

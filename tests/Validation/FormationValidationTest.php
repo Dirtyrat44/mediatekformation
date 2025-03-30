@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Tests\Validation;
+namespace App\tests\Validation;
 
 use App\Entity\Playlist;
 use App\Entity\Formation;
@@ -8,7 +8,12 @@ use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 /**
- * @author arthur poncin
+ * Tests de validation de l'entité Formation
+ *
+ * Vérifie que la date de publication ne peut pas être vide ou après aujourd'hui
+ * et qu’une date valide passée est acceptée par le validateur Symfony
+ *
+ * @author arthurponcin
  */
 class FormationValidationTest extends KernelTestCase
 {

@@ -10,6 +10,12 @@ use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Bridge\Validator\Constraints\UniqueEntity;
 use Doctrine\ORM\Mapping as ORM;
 
+/**
+ * Entité représentant une formation
+ *
+ * Une formation est liée à une playlist, peut appartenir à plusieurs catégories
+ *
+ */
 #[ORM\Entity(repositoryClass: FormationRepository::class)]
 #[UniqueEntity('title')]
 class Formation
@@ -19,20 +25,40 @@ class Formation
      */
     private const CHEMIN_IMAGE = "https://i.ytimg.com/vi/";
 
+    /**
+     * Identifiant unique de la formation
+     *
+     * @var int|null
+     */
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+     /**
+     * Date de publication de la formation
+     *
+     * @var \DateTimeInterface|null
+     */
     #[Assert\NotNull(message: "La date de publication est requise.")]
     #[Assert\LessThanOrEqual('today', message: "La date ne peut pas être postérieure à aujourd’hui.")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $publishedAt = null;
 
+      /**
+     * Titre de la formation
+     *
+     * @var string|null
+     */
     #[Assert\NotBlank(message: 'Le titre est obligatoire.')]
     #[ORM\Column(length: 100, nullable: true)]
     private ?string $title = null;
 
+    /**
+     * Description de la formation
+     *
+     * @var string|null
+     */
     #[Assert\Length(
         max: 1000,
         maxMessage: "La description ne doit pas dépasser {{ limit }} caractères."
@@ -40,6 +66,11 @@ class Formation
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $description = null;
 
+    /**
+     * Identifiant YouTube de la vidéo
+     *
+     * @var string|null
+     */
     #[Assert\NotBlank(message : 'Ce champ est requis')]
     #[Assert\Regex(
         pattern: '/^[a-zA-Z0-9_-]{11}$/',
@@ -48,6 +79,11 @@ class Formation
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $videoId = null;
 
+     /**
+     * Playlist associée à la formation
+     *
+     * @var Playlist|null
+     */
     #[Assert\NotNull(message: "La playlist est requise.")]
     #[ORM\ManyToOne(inversedBy: 'formations')]
     private ?Playlist $playlist = null;
@@ -58,6 +94,9 @@ class Formation
     #[ORM\ManyToMany(targetEntity: Categorie::class, inversedBy: 'formations')]
     private Collection $categories;
 
+    /**
+     * Constructeur
+     */
     public function __construct()
     {
         $this->categories = new ArrayCollection();
@@ -80,6 +119,11 @@ class Formation
         return $this;
     }
 
+    /**
+     * Retourne la date de publication au format string
+     *
+     * @return string
+     */
     public function getPublishedAtString(): string
     {
         if ($this->publishedAt == null) {
@@ -124,11 +168,21 @@ class Formation
         return $this;
     }
 
+    /**
+     * Retourne l'URL de la miniature
+     *
+     * @return string|null
+     */
     public function getMiniature(): ?string
     {
         return self::CHEMIN_IMAGE . $this->videoId . "/default.jpg";
     }
 
+    /**
+     * Retourne l'URL de la miniature
+     *
+     * @return string|null
+     */
     public function getPicture(): ?string
     {
         return self::CHEMIN_IMAGE . $this->videoId . "/hqdefault.jpg";
@@ -154,6 +208,12 @@ class Formation
         return $this->categories;
     }
 
+    /**
+     * Ajoute une catégorie à la formation
+     *
+     * @param Categorie $category
+     * @return static
+     */
     public function addCategory(Categorie $category): static
     {
         if (!$this->categories->contains($category)) {
@@ -164,6 +224,12 @@ class Formation
         return $this;
     }
 
+    /**
+     * Supprime une catégorie de la formation
+     *
+     * @param Categorie $category
+     * @return static
+     */
     public function removeCategory(Categorie $category): static
     {
         $this->categories->removeElement($category);

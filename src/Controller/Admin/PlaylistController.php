@@ -54,6 +54,11 @@ class PlaylistController extends AbstractController {
         $this->categorieRepository = $categorieRepository;
     }
 
+    /**
+     *  Affiche toutes les playlists.
+     *
+     * @return Response
+     */
     #[Route('/', name: 'admin_playlist_index', methods: ['GET'])]
     public function index(): Response {
         $categories = $this->categorieRepository->findAll();
@@ -66,6 +71,13 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Permet de créer une nouvelle playlist.
+    *
+    * @param Request $request
+    * @param EntityManagerInterface $entityManager
+    * @return Response
+    */
     #[Route('/new', name: 'admin_playlist_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response {
         $playlist = new Playlist();
@@ -86,6 +98,14 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Permet de modifier une playlist existante.
+    *
+    * @param Request $request
+    * @param Playlist $playlist
+    * @param EntityManagerInterface $entityManager
+    * @return Response
+    */
     #[Route('/{id<\d+>}/edit', name: 'admin_playlist_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Playlist $playlist, EntityManagerInterface $entityManager): Response {
         $form = $this->createForm(PlaylistType::class, $playlist);
@@ -110,6 +130,14 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Supprime une playlist.
+    *
+    * @param Request $request
+    * @param Playlist $playlist
+    * @param EntityManagerInterface $entityManager
+    * @return Response
+    */
     #[Route('/{id}', name: 'admin_playlist_delete', methods: ['POST'])]
     public function delete(Request $request, Playlist $playlist, EntityManagerInterface $entityManager): Response {
         if ($this->isCsrfTokenValid('delete' . $playlist->getId(), $request->getPayload()->get('_token'))) {
@@ -121,6 +149,13 @@ class PlaylistController extends AbstractController {
         return $this->redirectToRoute('admin_playlist_index', [], Response::HTTP_SEE_OTHER);
     }
 
+    /**
+    * Trie les playlists selon un champ et un ordre donné.
+    *
+    * @param string $champ
+    * @param string $ordre
+    * @return Response
+    */
     #[Route('/tri/{champ}/{ordre}', name: 'admin_playlists_sort')]
     public function sort($champ, $ordre): Response {
         if ($champ === "name") {
@@ -138,6 +173,12 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Trie les playlists par nombre de formations.
+    *
+    * @param string $ordre
+    * @return Response
+    */
     #[Route('/tri/formations/{ordre}', name: 'admin_playlists_sortByFormationCount')]
     public function sortByFormationCount(string $ordre): Response {
         $playlists = $this->playlistRepository->findAllOrderByFormationCount($ordre);
@@ -149,6 +190,14 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Filtre les playlists selon un champ et une valeur.
+    *
+    * @param string $champ
+    * @param Request $request
+    * @param string $table
+    * @return Response
+    */
     #[Route('/recherche/{champ}/{table}', name: 'admin_playlists_findallcontain')]
     public function findAllContain($champ, Request $request, $table = ""): Response {
         $valeur = $request->get("recherche");
@@ -162,6 +211,12 @@ class PlaylistController extends AbstractController {
         ]);
     }
 
+    /**
+    * Affiche le détail d'une playlist.
+    *
+    * @param int $id
+    * @return Response
+    */
     #[Route('/{id}', name: 'admin_playlist_showone')]
     public function showOne($id): Response {
         $playlist = $this->playlistRepository->find($id);
