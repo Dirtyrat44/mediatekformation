@@ -17,8 +17,8 @@ jobs:
         mkdir -p ~/.ssh
         echo "${{ secrets.ALWAYSDATA_SSH_KEY }}" > ~/.ssh/id_ed25519
         chmod 600 ~/.ssh/id_ed25519
-        ssh-keyscan ssh-alwaysdata.net >> ~/.ssh/known_hosts
+        ssh-keyscan ssh-mediatekformation.alwaysdata.net >> ~/.ssh/known_hosts
 
     - name: Deploy via SSH
       run: |
-        ssh -o StrictHostKeyChecking=no mediatekformation@ssh-alwaysdata.net 'cd ~/www/mediatekformation && git pull origin main'
+        ssh -o StrictHostKeyChecking=no mediatekformation@ssh-mediatekformation.alwaysdata.net 'cd ~/www/mediatekformation && git pull origin main'
