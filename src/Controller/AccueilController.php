@@ -44,4 +44,4 @@ class AccueilController extends AbstractController
         return $this->render("pages/cgu.html.twig");
     }
     
-    }   
+    }

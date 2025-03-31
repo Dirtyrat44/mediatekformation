@@ -3,13 +3,14 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/C:/wamp64/www/mediatekformation/tests/Validation/FormationValidationTest.php</file>
-            <file>file:/C:/wamp64/www/mediatekformation/src/DataFixtures/AppFixtures.php</file>
+            <file>file:/C:/wamp64/www/mediatekformation/templates/pages/cgu.html.twig</file>
+            <file>file:/C:/wamp64/www/mediatekformation/public/.htaccess</file>
+            <file>file:/C:/wamp64/www/mediatekformation/public/index.php</file>
+            <file>file:/C:/wamp64/www/mediatekformation/templates/pages/accueil.html.twig</file>
+            <file>file:/C:/wamp64/www/mediatekformation/src/Controller/AccueilController.php</file>
+            <file>file:/C:/wamp64/www/mediatekformation/templates/security/login.html.twig</file>
+            <file>file:/C:/wamp64/www/mediatekformation/config/packages/security.yaml</file>
             <file>file:/C:/wamp64/www/mediatekformation/src/Security/LoginFormAuthenticator.php</file>
-            <file>file:/C:/wamp64/www/mediatekformation/src/Form/CategorieType.php</file>
-            <file>file:/C:/wamp64/www/mediatekformation/src/Form/FormationType.php</file>
-            <file>file:/C:/wamp64/www/mediatekformation/tests/Entity/FormationTest.php</file>
-            <file>file:/C:/wamp64/www/mediatekformation/tests/Functional/AdminCategoriePageTest.php</file>
         </group>
     </open-files>
 </project-private>
