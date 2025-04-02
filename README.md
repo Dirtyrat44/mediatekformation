@@ -1,59 +1,136 @@
 # Mediatekformation
+
 ## Présentation de l'application d'origine
-Voici le [lien du dépôt d'origine](https://github.com/CNED-SLAM/mediatekformation) où est expliqué plus en détails le contexte et la présentation de l'application dans le readme.
-Ce dépôt présente les fonctionnalités ajoutées au projet, notamment la création d’un back-office et les évolutions apportées à la partie front.
+
+Voici le [lien du dépôt d'origine](https://github.com/CNED-SLAM/mediatekformation) où sont expliqués le contexte et les fonctionnalités initiales du projet.
+
+Ce dépôt présente uniquement les **fonctionnalités ajoutées** à l’application dans le cadre de son évolution.
+
+---
+
 ## Fonctionnalités ajoutées
-### Back-office d'administration
-Ajout d'une interface sécurisée permettant la gestion des contenus depuis un espace administrateur.
-Trois sections administrables :
 
-    Formations : ajout, modification, suppression, tri, filtrage.
+### Ajout de fonctionnalités dans le front-office
 
-    Playlists : idem.
+- Sur la page des **playlists**, une **nouvelle colonne** affiche le **nombre de formations** associées à chaque playlist.
+- Cette colonne permet un **tri ascendant ou descendant**.
+- Ce **nombre est également affiché** sur la page de détail de chaque playlist.
 
-    Catégories : idem.
-Les pages de gestion sont accessibles uniquement après connexion à l’espace admin.
-L’interface suit l’architecture visuelle du front (bannière, structure générale).
-### Sécurité et bonnes pratiques
-Formulaires sécurisés avec protection CSRF.
+---
 
-Requêtes paramétrées via Doctrine (pas de requêtes SQL brutes).
+### Back-office d’administration
 
-Contrôle des saisies : validation côté serveur.
+Création d’une interface de gestion des contenus, accessible uniquement aux administrateurs authentifiés.
 
-Accès restreint aux routes back-office par système de rôles.
-### Mutualisation de composants Twig
-Création de partials pour mutualiser les éléments réutilisables :
+Sections disponibles :
 
-    Boutons d’action (modifier/supprimer)
+- **Formations** : ajout, modification, suppression.
+- **Playlists** : ajout, modification, suppression (uniquement si aucune formation liée).
+- **Catégories** : ajout, modification, suppression (uniquement si aucune formation liée).
 
-    Messages flash
+L’affichage du back-office reprend la structure du front.
 
-    Filtres de tri et de recherche
-Les partials sont organisés dans templates/admin/partial/ pour une meilleure lisibilité et réutilisabilité.
-### Refactorisation du code
-  Respect de l’architecture MVC Symfony
+---
 
-  Nettoyage des fichiers inutiles ou redondants
+### Accès administrateur
 
-  Amélioration de la lisibilité du code et des templates
+- Mise en place d’une page de connexion sécurisée pour accéder au **back-office**.
+- Une fois connecté, un **bouton "Centre d’administration"** apparaît dans l’interface front pour accéder facilement au back.
+- Déconnexion possible à tout moment, depuis n’importe quelle page.
+
+---
+
+### Démo en ligne
+
+L’application peut être consultée à l’adresse suivante :  
+👉 [https://mediatekformation.alwaysdata.net](https://mediatekformation.alwaysdata.net)
+
+> Les identifiants d’accès à l’espace administrateur ne sont malheuresement pas disponible.
+
+---
+
+### Documentation intégrée
+
+Un lien vers la **documentation technique de l’application** est disponible dans le site :
+👉 [Consulter la documentation](https://mediatekformation.alwaysdata.net/documentation)
+
+---
+
 ## Installation et utilisation en local
+
 ### Prérequis
-    PHP ≥ 8.1
-  
-    Symfony CLI
-  
-    Composer
-  
-    Serveur local (Wamp, Xampp ou autre)
-  
-    MySQL
-  
-  Un navigateur moderne
-  ### Étapes d'installation
-  #### Cloner le dépôt :
-    git clone https://github.com/votre-utilisateur/mediatekformation.git
-    cd mediatekformation
-  #### Installer les dépendances :
-    composer install
-  #### Configurer la base de données :
+
+- PHP ≥ 8.1  
+- Symfony CLI  
+- Composer  
+- MySQL  
+- Serveur local (Wamp, Xampp ou autre)  
+- Navigateur web 
+
+---
+
+### Installation avec Git (recommandé)
+
+#### 1. Cloner le dépôt
+```bash
+git clone https://github.com/votre-utilisateur/mediatekformation.git
+cd mediatekformation
+```
+
+#### 2. Installer les dépendances PHP
+```bash
+composer install
+```
+
+#### 3. Copier le fichier d’environnement
+```bash
+cp .env .env.local
+```
+
+### Configuration de la base de données
+
+#### 1. Créer une base de données MySQL (ex : mediatekformation).
+
+#### 2. Dans .env.local, configurer la variable DATABASE_URL :
+DATABASE_URL="mysql://utilisateur:motdepasse@127.0.0.1:3306/mediatekformation"
+
+#### 3. Lancer les commandes suivantes :
+```bash
+php bin/console doctrine:database:create
+php bin/console doctrine:migrations:migrate
+php bin/console doctrine:fixtures:load
+```
+
+### Lancer l'application
+```bash
+symfony server:start
+```
+
+Rendez-vous ensuite sur [https://127.0.0.1:8000](https://127.0.0.1:8000/)
+
+### Installation alternative via fichier ZIP
+
+#### 1. Vérifier que Composer, Git et Wampserver (ou équivalent) sont installés sur votre machine.
+
+#### 2. Télécharger le projet au format ZIP depuis GitHub et le décompresser dans le dossier www de Wamp.
+
+#### 3. Renommer le dossier en mediatekformation.
+
+#### 4. Ouvrir une fenêtre de commande (en tant qu'administrateur), aller dans le dossier du projet :
+```bash
+cd C:\wamp64\www\mediatekformation
+composer install
+```
+
+#### 5. Créer la base de données mediatekformation via phpMyAdmin (utilisateur root sans mot de passe par défaut).
+
+#### 6. Importer le fichier mediatekformation.sql présent à la racine du projet.
+
+#### 7. Si nécessaire, configurer les accès dans le fichier .env :
+```bash
+DATABASE_URL="mysql://root:@127.0.0.1:3306/mediatekformation"
+```
+
+#### 8. Ouvrir l'application dans un navigateur à l'adresse suivante :
+👉 http://localhost/mediatekformation/public/index.php
+
