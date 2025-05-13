@@ -29,8 +29,10 @@ Création d’une interface de gestion des contenus, accessible uniquement aux a
 
 Sections disponibles :
 
-- **Formations** : ajout, modification, suppression.
+- **Formations** :
 
+- ajout, modification, suppression.
+<img src="https://github.com/user-attachments/assets/503ff3e0-ece8-40e6-bbf8-c62d7fc4c6d7" alt="formationbackview" width="33%">
 <p align="center">
   <img src="https://github.com/user-attachments/assets/503ff3e0-ece8-40e6-bbf8-c62d7fc4c6d7" alt="formationbackview" width="33%">
   <img src="https://github.com/user-attachments/assets/64391a0a-120a-43bd-8a86-d7095a034963" alt="creeformationback" width="33%">
@@ -41,13 +43,14 @@ Sections disponibles :
 
 - **Playlists** : ajout, modification, suppression (uniquement si aucune formation liée).
 
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/8bd14333-baa2-4eda-b363-31791ef7ce27" alt="playlistbackview" width="30%">
-  <img src="https://github.com/user-attachments/assets/59998baa-7a91-4eb0-aed5-f0b8bd1e5d80" alt="playlistnewback" width="30%">
-  <img src="https://github.com/user-attachments/assets/5c6fd87e-30cd-4634-ac28-612d44a5cbf2" alt="playlistbackmodif" width="30%">
-</p>
+-- ***Ajout***
+[ajout](https://github.com/user-attachments/assets/8bd14333-baa2-4eda-b363-31791ef7ce27)
 
+-- ***Modification***
+[modif](https://github.com/user-attachments/assets/59998baa-7a91-4eb0-aed5-f0b8bd1e5d80)
 
+-- ***Suppression***
+[suppr](https://github.com/user-attachments/assets/5c6fd87e-30cd-4634-ac28-612d44a5cbf2" alt="playlistbackmodif)
 
 - **Catégories** : ajout, modification, suppression (uniquement si aucune formation liée).
   
