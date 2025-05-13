@@ -44,13 +44,13 @@ Sections disponibles :
 - **Playlists** : ajout, modification, suppression (uniquement si aucune formation liée).
 
 -- ***Ajout***
-[ajout](https://github.com/user-attachments/assets/8bd14333-baa2-4eda-b363-31791ef7ce27)
+![ajout](https://github.com/user-attachments/assets/8bd14333-baa2-4eda-b363-31791ef7ce27)
 
 -- ***Modification***
-[modif](https://github.com/user-attachments/assets/59998baa-7a91-4eb0-aed5-f0b8bd1e5d80)
+![modif](https://github.com/user-attachments/assets/59998baa-7a91-4eb0-aed5-f0b8bd1e5d80)
 
 -- ***Suppression***
-[suppr](https://github.com/user-attachments/assets/5c6fd87e-30cd-4634-ac28-612d44a5cbf2" alt="playlistbackmodif)
+![suppr](https://github.com/user-attachments/assets/5c6fd87e-30cd-4634-ac28-612d44a5cbf2" alt="playlistbackmodif)
 
 - **Catégories** : ajout, modification, suppression (uniquement si aucune formation liée).
   
