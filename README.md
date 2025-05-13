@@ -31,26 +31,32 @@ Sections disponibles :
 
 - **Formations** :
 
-- ajout, modification, suppression.
-<img src="https://github.com/user-attachments/assets/503ff3e0-ece8-40e6-bbf8-c62d7fc4c6d7" alt="formationbackview" width="33%">
-<p align="center">
-  <img src="https://github.com/user-attachments/assets/503ff3e0-ece8-40e6-bbf8-c62d7fc4c6d7" alt="formationbackview" width="33%">
-  <img src="https://github.com/user-attachments/assets/64391a0a-120a-43bd-8a86-d7095a034963" alt="creeformationback" width="33%">
-  <img src="https://github.com/user-attachments/assets/f3c4474f-b614-405d-93c8-84f1825fb647" alt="modifformationback" width="33%">
-</p>
+  - ***Ajout***
 
+![creeformationback](https://github.com/user-attachments/assets/303daa1b-b673-4d24-84ec-d876534fb4e4)
 
+  - ***Modification***
 
-- **Playlists** : ajout, modification, suppression (uniquement si aucune formation liée).
+![modifformationback](https://github.com/user-attachments/assets/cc4a0163-0747-4c06-862a-c34fbf15d4ba)
 
--- ***Ajout***
-![ajout](https://github.com/user-attachments/assets/8bd14333-baa2-4eda-b363-31791ef7ce27)
+- ***Suppression***
 
--- ***Modification***
-![modif](https://github.com/user-attachments/assets/59998baa-7a91-4eb0-aed5-f0b8bd1e5d80)
+![formationbackview](https://github.com/user-attachments/assets/7eda1b9e-93ff-4e78-97b3-44765e90f6eb)
 
--- ***Suppression***
-![suppr](https://github.com/user-attachments/assets/5c6fd87e-30cd-4634-ac28-612d44a5cbf2" alt="playlistbackmodif)
+- **Playlists** :
+
+  - ***Ajout***
+
+![playlistnewback](https://github.com/user-attachments/assets/3dfcb69e-8220-4573-a0c9-7456d8f3522d)
+
+  - ***Modification***
+    
+![playlistbackmodif](https://github.com/user-attachments/assets/67d66dc6-79ad-4fe5-b05f-8044d7ef9b20)
+
+  - ***Suppression***
+
+![playlistbackview](https://github.com/user-attachments/assets/8eeb955d-bc28-4f7d-a16d-969870b55f76)
+
 
 - **Catégories** : ajout, modification, suppression (uniquement si aucune formation liée).
   
